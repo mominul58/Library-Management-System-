@@ -1,9 +1,8 @@
-#Use a CSV file to store initial library data
+#part 1: Use a CSV file to store initial library data:
 
+import csv
 
-import pandas as pd
-
-# Sample initial data
+# Library data
 library_data = {
     "Book ID": [1, 2, 3, 4, 5],
     "Title": ["Pather Panchali", "Chokher Bali", "Padma Nadir Majhi", "Kobor", "Shaheb Bibi Golam"],
@@ -13,17 +12,34 @@ library_data = {
     "Borrower": [None, "Asif", "folik", None, "Rasel"]
 }
 
-# Create a Pandas DataFrame
-df = pd.DataFrame(library_data)
-
-# Save the DataFrame to a CSV file
+# CSV file name
 csv_file = "library_data.csv"
-df.to_csv(csv_file, index=False)
-# print(f"Library data has been saved to {csv_file}.")
 
-# Load the CSV file into a DataFrame
-loaded_df = pd.read_csv(csv_file)
+# Writing data to CSV
+with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file)
+    
+    # Write the header
+    writer.writerow(library_data.keys())
+    
+    # Write the rows
+    for i in range(len(library_data["Book ID"])):
+        writer.writerow([
+            library_data["Book ID"][i],
+            library_data["Title"][i],
+            library_data["Author"][i],
+            library_data["Genre"][i],
+            library_data["Availability"][i],
+            library_data["Borrower"][i]
+        ])
 
-# Display the loaded data
+print(f"Library data has been saved to {csv_file}.")
+
+#Part 2: Load the data into a Pandas DataFrame for processing.
+
+import pandas as pd
+csv_file = "library_data.csv"
+df = pd.read_csv(csv_file)
+
 print("Library Data:")
-print(loaded_df)
+print(df)
